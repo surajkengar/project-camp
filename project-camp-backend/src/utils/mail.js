@@ -25,7 +25,7 @@ const sendEmail = async (options) => {
   // Create a nodemailer transporter instance which is responsible to send a mail
   const transporter = nodemailer.createTransport({
     host: process.env.MAILTRAP_SMTP_HOST,
-    port: process.env.MAILTRAP_SMTP_PORT,
+    port: process.env.MAILTRAP_SMTP_PORT ||2525,
     auth: {
       user: process.env.MAILTRAP_SMTP_USER,
       pass: process.env.MAILTRAP_SMTP_PASS,
@@ -42,6 +42,7 @@ const sendEmail = async (options) => {
 
   try {
     await transporter.sendMail(mail);
+    
   } catch (error) {
     // As sending email is not strongly coupled to the business logic it is not worth to raise an error when email sending fails
     // So it's better to fail silently rather than breaking the app
